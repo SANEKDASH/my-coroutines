@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+#include "wp_coroutine.h"
+
+void func()
+{
+		printf("Hello!\n");
+}
+
+int main()
+{
+		wp_coroutine_t coro;
+
+		wp_coroutine_init(&coro, 1);
+
+		wp_coroutine_add_task(&coro, func, NULL); 
+	
+		wp_coroutine_destroy(&coro);
+    
+		return 0;
+}
