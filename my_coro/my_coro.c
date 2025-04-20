@@ -116,7 +116,6 @@ int my_coro_destroy(struct my_coro *my_coro)
   my_coro->is_live = 0;
 
   pthread_cond_signal(&my_coro->wait_run);
-  
   pthread_join(my_coro->thr, NULL);
   
   pthread_mutex_destroy(&my_coro->mt);
