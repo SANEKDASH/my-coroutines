@@ -1,31 +1,35 @@
+#include "my_coro/my_coro.h"
 #include <stdio.h>
 
-#include "wp_coroutine.h"
+struct my_coro coro;
 
-void func1()
+char buf[1000000000];
+
+void print_numbers()
 {
-  printf("Hello1!\n");
+  for (int i = 0; i < 10; i++) {  
+	for (int i = 0; i < sizeof(buf); i++) {
+	  buf[i] = 1;
+	}
+
+	printf("%d\n", i);
+	my_coro_yield(&coro);
+  } 
 }
-
-
-void func2()
-{
-  printf("Hello2!\n");
-}
-
 
 int main()
 {
-  wp_coroutine_t coro;
-
-  wp_coroutine_init(&coro, 10);
-
-  wp_coroutine_add_task(&coro, func1, NULL); 
-  wp_coroutine_add_task(&coro, func2, NULL); 
+  if (my_coro_init(&coro, print_numbers)) {
+	perror("failed to init coro");
+  }
   
-  wp_coroutine_wait_for_tasks(&coro);
+  my_coro_start(&coro);
+  my_coro_start(&coro);
+  my_coro_start(&coro);
+
+  my_coro_wait_for_complete(&coro);
   
-  wp_coroutine_destroy(&coro);
-    
+  my_coro_destroy(&coro);
+
   return 0;
 }

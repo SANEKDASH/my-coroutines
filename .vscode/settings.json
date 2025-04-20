@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "wp_coroutine.h": "c",
-        "stdio.h": "c"
-    },
-    "cSpell.words": [
-        "coro"
-    ]
-}

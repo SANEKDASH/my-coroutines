@@ -1,10 +1,13 @@
-SOURCES = main.c wp_coroutine.c task_queue.c 
+EXECUTABLE=coro
 
-FLAGS = -lc -Wall -O0
+SOURCES=main.c my_coro/my_coro.c
+
+FLAGS=-Wall -lc -lpthread
 
 CC = gcc
 
-EXECUTABLE = wpc
-
 all:
-	$(CC) $(FLAGS) $(SOURCES) -o $(EXECUTABLE)
+	$(CC) $(SOURCES) $(FLAGS) -o $(EXECUTABLE)
+
+clean:
+	$(RM) $(EXECUTABLE)
